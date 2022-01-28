@@ -3,9 +3,11 @@ import 'package:dio/dio.dart';
 class DioHelper {
   static Dio dio;
   static initDio() {
-    dio = Dio(BaseOptions(
-      baseUrl: 'https://newsapi.org/',
-    ));
+    dio = Dio(
+      BaseOptions(
+        baseUrl: 'https://newsapi.org',
+      ),
+    );
   }
 
   static Future<Response> getData(

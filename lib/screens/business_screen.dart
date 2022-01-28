@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/cubit/news_cubit.dart';
+import 'package:news_app/cubit/news_states.dart';
+import 'package:news_app/widgets/build_article.dart';
+import 'package:news_app/widgets/view_all_data.dart';
 
 class BusinessNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Business'));
+    return BlocConsumer<NewsCubit, NewsStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var usedCubit = NewsCubit.getObj(context);
+        return (state is NewsGetDataLoadingState)
+            ? Center(child: CircularProgressIndicator())
+            : AllDataBuilder(allRetrievedData: usedCubit.businessData);
+      },
+    );
   }
 }

@@ -51,20 +51,20 @@ class NewsCubit extends Cubit<NewsStates> {
     } else if (index == 1) {
       getWantedData('business');
     } else if (index == 2) {
-      getWantedData('business');
+      getWantedData('science');
     } else {}
   }
 
   getWantedData(String wantedCategory) {
+    emit(NewsGetDataLoadingState());
     DioHelper.getData(
-      methodUrl: 'v2/top-headlines',
+      methodUrl: '/v2/top-headlines',
       query: {
         'country': 'eg',
         'category': '$wantedCategory',
         'apiKey': '70fc98e222f3492dafa85c0991a7e107',
       },
     ).then((response) {
-      emit(NewsGetDataSuccessState());
       if (wantedCategory == 'sports') {
         sportsData = response.data['articles'];
       } else if (wantedCategory == 'business') {
@@ -72,6 +72,7 @@ class NewsCubit extends Cubit<NewsStates> {
       } else {
         scienceData = response.data['articles'];
       }
+      emit(NewsGetDataSuccessState());
     }).catchError((error) {
       emit(
         NewsGetDataErrorState(
